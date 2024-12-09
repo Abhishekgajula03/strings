@@ -1,0 +1,101 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the 'makeAnagram' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. STRING a
+ *  2. STRING b
+ */
+
+int makeAnagram(string a, string b) {
+    
+    vector<int>frequency(26,0);
+    for(char c:a){
+        frequency[c-'a']++;
+    }
+    for(char c:b){
+        frequency[c-'a']--;
+    }
+    int deletes=0;
+    for(int count:frequency){
+        deletes+=abs(count);
+    }
+    return deletes;
+    ;
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string a;
+    getline(cin, a);
+
+    string b;
+    getline(cin, b);
+
+    int res = makeAnagram(a, b);
+
+    fout << res << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+
+Step-by-Step Dry Run
+Initialization:
+
+Strings: a = "cde" and b = "abc"
+Create an array frequency of size 26 to hold counts of each character:
+ini
+frequency = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // for 'a' to 'z'  
+Counting Frequencies for String a ("cde"):
+
+Process character c:
+css
+frequency['c' - 'a']++; // frequency[2]++  
+frequency = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+Process character d:
+css
+frequency['d' - 'a']++; // frequency[3]++  
+frequency = [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+Process character e:
+css
+frequency['e' - 'a']++; // frequency[4]++  
+frequency = [0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+Decreasing Frequencies for String b ("abc"):
+
+Process character a:
+css
+frequency['a' - 'a']--; // frequency[0]--  
+frequency = [-1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+Process character b:
+css
+frequency['b' - 'a']--; // frequency[1]--  
+frequency = [-1, -1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+Process character c:
+css
+frequency['c' - 'a']--; // frequency[2]--  
+frequency = [-1, -1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+Calculating Total Deletions:
+
+Initialize deletions to 0.
+Loop through frequency to calculate the total deletions needed:
+ini
+for int count : frequency =>   
+- count = -1 => deletions += abs(-1) => deletions = 1  
+- count = -1 => deletions += abs(-1) => deletions = 2  
+- count = 0  => deletions += abs(0)  => deletions = 2  
+- count = 1  => deletions += abs(1)  => deletions = 3  
+- count = 1  => deletions += abs(1)  => deletions = 4  
+- count = 0, ..., count = 0  (other counts are zero, do not add)  
+Return the Result:
+
+The final value of deletions is 4, which indicates the minimum number of deletions needed to make the two strings anagrams.
